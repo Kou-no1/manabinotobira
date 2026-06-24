@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>まなびのとびら</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --sky: #0ea5e9;
+    --sky-light: #e0f2fe;
+    --star: #f59e0b;
+    --star-light: #fef3c7;
+    --green: #10b981;
+    --green-light: #d1fae5;
+    --purple: #8b5cf6;
+    --purple-light: #ede9fe;
+    --red: #ef4444;
+    --red-light: #fee2e2;
+    --orange: #f97316;
+    --orange-light: #ffedd5;
+    --bg: #f0f9ff;
+    --surface: #ffffff;
+    --text: #1e293b;
+    --text-sub: #64748b;
+    --border: #e2e8f0;
+    --radius: 16px;
+    --radius-sm: 10px;
+    --radius-pill: 999px;
+  }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding-bottom: 4rem;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    background: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
+    padding: 2.5rem 1.5rem 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '⭐🚀🌍🔬📚';
+    font-size: 80px;
+    position: absolute;
+    top: -20px; left: -20px;
+    opacity: 0.08;
+    letter-spacing: 10px;
+    pointer-events: none;
+  }
+  .hero-title {
+    font-size: clamp(28px, 7vw, 42px);
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: 0.04em;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  }
+  .hero-sub {
+    font-size: clamp(13px, 3vw, 16px);
+    color: rgba(255,255,255,0.85);
+    margin-top: 8px;
+  }
+
+  /* ── Container ── */
+  .container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 2rem 1rem 0;
+  }
+
+  /* ── Section ── */
+  .section { margin-bottom: 2rem; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .section-icon {
+    width: 40px; height: 40px;
+    border-radius: var(--radius-sm);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .section-title {
+    font-size: 18px;
+    font-weight: 900;
+    letter-spacing: 0.02em;
+  }
+  .section-desc {
+    font-size: 12px;
+    color: var(--text-sub);
+    margin-top: 2px;
+  }
+
+  /* ── App card ── */
+  .app-card {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.1rem 1.25rem;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    margin-bottom: 10px;
+    transition: transform 0.12s, box-shadow 0.12s, border-color 0.12s;
+  }
+  .app-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  }
+  .app-card-inner {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .app-card-icon {
+    font-size: 28px;
+    flex-shrink: 0;
+    width: 44px;
+    text-align: center;
+  }
+  .app-card-body { flex: 1; min-width: 0; }
+  .app-card-title {
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+  .app-card-desc {
+    font-size: 12px;
+    color: var(--text-sub);
+    margin-top: 3px;
+    line-height: 1.5;
+  }
+  .app-card-arrow {
+    font-size: 18px;
+    color: #cbd5e1;
+    flex-shrink: 0;
+  }
+
+  /* ── Color variants ── */
+  .card-sky   { border-color: #bae6fd; } .card-sky:hover   { border-color: var(--sky); }
+  .card-star  { border-color: #fde68a; } .card-star:hover  { border-color: var(--star); }
+  .card-green { border-color: #a7f3d0; } .card-green:hover { border-color: var(--green); }
+  .card-purple{ border-color: #ddd6fe; } .card-purple:hover{ border-color: var(--purple); }
+  .card-red   { border-color: #fca5a5; } .card-red:hover   { border-color: var(--red); }
+  .card-orange{ border-color: #fed7aa; } .card-orange:hover{ border-color: var(--orange); }
+
+  .icon-sky    { background: var(--sky-light); }
+  .icon-star   { background: var(--star-light); }
+  .icon-green  { background: var(--green-light); }
+  .icon-purple { background: var(--purple-light); }
+  .icon-red    { background: var(--red-light); }
+  .icon-orange { background: var(--orange-light); }
+
+  /* ── Ranking block ── */
+  .ranking-block {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+    margin-bottom: 10px;
+  }
+  .ranking-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-sub);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .ranking-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .ranking-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 14px;
+    border-radius: var(--radius-pill);
+    font-size: 13px;
+    font-weight: 700;
+    font-family: inherit;
+    text-decoration: none;
+    transition: transform 0.1s, opacity 0.1s;
+  }
+  .ranking-btn:hover { transform: scale(1.05); opacity: 0.85; }
+  .btn-gold   { background: #fef3c7; color: #92400e; border: 1.5px solid #fbbf24; }
+  .btn-grade  { background: #f1f5f9; color: #334155; border: 1.5px solid #cbd5e1; }
+  .btn-register { background: #dcfce7; color: #166534; border: 1.5px solid #86efac; }
+
+  /* ── Sub card (for programming links) ── */
+  .sub-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .sub-card {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.85rem 1rem;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    transition: transform 0.1s, border-color 0.12s;
+  }
+  .sub-card:hover { transform: translateY(-2px); border-color: var(--purple); }
+  .sub-card-emoji { font-size: 22px; }
+
+  /* ── Notice badge ── */
+  .notice {
+    display: inline-block;
+    background: #fef3c7;
+    color: #92400e;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: var(--radius-pill);
+    margin-top: 6px;
+  }
+
+  /* ── Footer ── */
+  footer {
+    border-top: 0.5px solid #e0e0e0;
+    padding: 1.5rem 0 1rem;
+    text-align: center;
+    margin-top: 2rem;
+  }
+  footer p:first-child { font-size: 15px; color: #888; margin: 0 0 4px; }
+  footer p:last-child  { font-size: 12px; color: #aaa; margin: 0; }
+
+  @media (max-width: 480px) {
+    .sub-cards { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-title">🌟 まなびのとびら</div>
+  <div class="hero-sub">べんきょうを もっと たのしく！</div>
+</div>
+
+<div class="container">
+
+  <!-- 理科捜査局 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-red">🔍</div>
+      <div>
+        <div class="section-title" style="color:#ef4444;">理科捜査局</div>
+        <div class="section-desc">科学の力で謎を解き明かせ！</div>
+      </div>
+    </div>
+    <a class="app-card card-red" href="https://kou-no1.github.io/detective-science/" target="_blank">
+      <div class="app-card-inner">
+        <div class="app-card-icon">🕵️</div>
+        <div class="app-card-body">
+          <div class="app-card-title">理科捜査局　〜理科の「なぜ？」を推理で解き明かせ！〜</div>
+          <div class="app-card-desc">科学的にドキドキハラハラ謎解きしながら、自然に考察力をアップ！</div>
+        </div>
+        <div class="app-card-arrow">›</div>
+      </div>
+    </a>
+  </div>
+
+  <!-- けいさんのほし -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-star">⭐</div>
+      <div>
+        <div class="section-title" style="color:#f59e0b;">けいさんのほし</div>
+        <div class="section-desc">宇宙を旅しながら計算が得意になる！</div>
+      </div>
+    </div>
+    <a class="app-card card-star" href="https://kou-no1.github.io/math-planet/" target="_blank">
+      <div class="app-card-inner">
+        <div class="app-card-icon">🚀</div>
+        <div class="app-card-body">
+          <div class="app-card-title">けいさんのほし</div>
+          <div class="app-card-desc">九九から分数まで、宇宙を旅しながら計算が得意になる！<br>高学年モードは平方数（11×11とか）や円周率九九も完備。</div>
+          <span class="notice">🏆 キミは全制覇で「？？？？？？？？」の称号を手に入れられるか！？</span>
+        </div>
+        <div class="app-card-arrow">›</div>
+      </div>
+    </a>
+  </div>
+
+  <!-- プログラミング -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-purple">💻</div>
+      <div>
+        <div class="section-title" style="color:#8b5cf6;">プログラミング学習</div>
+        <div class="section-desc">コードで世界を動かそう！</div>
+      </div>
+    </div>
+    <div class="sub-cards">
+      <a class="sub-card" href="https://scratch.mit.edu/" target="_blank">
+        <span class="sub-card-emoji">🐱</span>スクラッチ
+      </a>
+      <a class="sub-card" href="https://studio.code.org/s/mc/lessons/1/levels/1?lang=ja-JP" target="_blank">
+        <span class="sub-card-emoji">⛏️</span>マイクラプログラミング
+      </a>
+      <a class="sub-card" href="https://algo.jeita.or.jp/" target="_blank">
+        <span class="sub-card-emoji">🧩</span>アルゴロジック
+      </a>
+    </div>
+  </div>
+
+  <!-- タイピング -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-green">⌨️</div>
+      <div>
+        <div class="section-title" style="color:#10b981;">タイピング</div>
+        <div class="section-desc">速くて正確なタイピングをみがこう！</div>
+      </div>
+    </div>
+
+    <!-- プレイグラム -->
+    <a class="app-card card-green" href="https://typing.playgram.jp/assessment" target="_blank">
+      <div class="app-card-inner">
+        <div class="app-card-icon">🟢</div>
+        <div class="app-card-body">
+          <div class="app-card-title">プレイグラムタイピング　<span style="font-size:11px;background:#d1fae5;color:#065f46;padding:2px 8px;border-radius:99px;font-weight:700;">やさしめ</span></div>
+          <div class="app-card-desc">はじめての人におすすめ！楽しくタイピングを練習しよう</div>
+        </div>
+        <div class="app-card-arrow">›</div>
+      </div>
+    </a>
+    <div class="ranking-block">
+      <div class="ranking-title">🏆 中央小プレイグラムタイピングランキング</div>
+      <div class="ranking-grid">
+        <a class="ranking-btn btn-register" href="https://x.gd/6XZwz" target="_blank">📝 登録する</a>
+        <a class="ranking-btn btn-gold" href="https://x.gd/tWriy" target="_blank">🥇 総合</a>
+        <a class="ranking-btn btn-grade" href="https://x.gd/YgQ37" target="_blank">3年生</a>
+        <a class="ranking-btn btn-grade" href="https://x.gd/lzweW" target="_blank">5年生</a>
+        <a class="ranking-btn btn-grade" href="https://x.gd/czFSI" target="_blank">6年生</a>
+      </div>
+    </div>
+
+    <!-- マナビジョン -->
+    <a class="app-card card-green" href="https://manabi.benesse.ne.jp/gakushu/typing/" target="_blank">
+      <div class="app-card-inner">
+        <div class="app-card-icon">🔵</div>
+        <div class="app-card-body">
+          <div class="app-card-title">マナビジョンタイピング　<span style="font-size:11px;background:#fee2e2;color:#991b1b;padding:2px 8px;border-radius:99px;font-weight:700;">むずかしめ</span></div>
+          <div class="app-card-desc">もっと速く！上をめざしたい人にチャレンジ</div>
+        </div>
+        <div class="app-card-arrow">›</div>
+      </div>
+    </a>
+    <div class="ranking-block">
+      <div class="ranking-title">🏆 中央小マナビジョンタイピングランキング</div>
+      <div class="ranking-grid">
+        <a class="ranking-btn btn-register" href="https://x.gd/nSAZO" target="_blank">📝 登録する</a>
+        <a class="ranking-btn btn-gold" href="https://x.gd/kIHqJ" target="_blank">🥇 総合</a>
+        <a class="ranking-btn btn-grade" href="https://x.gd/I37np" target="_blank">5年生</a>
+        <a class="ranking-btn btn-grade" href="https://x.gd/nC9O1" target="_blank">6年生</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 都道府県 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-sky">🗾</div>
+      <div>
+        <div class="section-title" style="color:#0ea5e9;">都道府県</div>
+        <div class="section-desc">日本の地理をマスターしよう！</div>
+      </div>
+    </div>
+    <a class="app-card card-sky" href="https://digital-gene.com/wgl/mp_japan/" target="_blank">
+      <div class="app-card-inner">
+        <div class="app-card-icon">🗺️</div>
+        <div class="app-card-body">
+          <div class="app-card-title">都道府県パズル</div>
+          <div class="app-card-desc">パズルで楽しく都道府県の位置を覚えよう！</div>
+        </div>
+        <div class="app-card-arrow">›</div>
+      </div>
+    </a>
+    <div class="ranking-block">
+      <div class="ranking-title">🏆 中央小都道府県ランキング</div>
+      <div class="ranking-grid">
+        <a class="ranking-btn btn-register" href="https://x.gd/StO6U" target="_blank">📝 登録する</a>
+        <a class="ranking-btn btn-gold" href="https://x.gd/QFbD4" target="_blank">🥇 総合</a>
+        <a class="ranking-btn btn-grade" href="https://x.gd/gnZkr" target="_blank">3年生</a>
+        <a class="ranking-btn btn-grade" href="https://x.gd/gZFGX" target="_blank">5年生</a>
+        <a class="ranking-btn btn-grade" href="https://x.gd/dyOIW" target="_blank">6年生</a>
+      </div>
+    </div>
+    <a class="app-card card-sky" href="https://ieben.net/tdfk-japan/question-ktsz17/" target="_blank">
+      <div class="app-card-inner">
+        <div class="app-card-icon">🏯</div>
+        <div class="app-card-body">
+          <div class="app-card-title">県庁所在地クイズ</div>
+          <div class="app-card-desc">県名と違う県の県庁所在地をおぼえよう！</div>
+        </div>
+        <div class="app-card-arrow">›</div>
+      </div>
+    </a>
+  </div>
+
+  <!-- 人体模型パズル -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-orange">🧬</div>
+      <div>
+        <div class="section-title" style="color:#f97316;">人体模型パズル</div>
+        <div class="section-desc">体のしくみをあそびながら学ぼう！</div>
+      </div>
+    </div>
+    <a class="app-card card-orange" href="https://play.google.com/store/apps/details?id=com.digitalgene.anatomypuzzle" target="_blank">
+      <div class="app-card-inner">
+        <div class="app-card-icon">🫀</div>
+        <div class="app-card-body">
+          <div class="app-card-title">あそんでまなべる人体模型パズル</div>
+          <div class="app-card-desc">体の臓器の位置をパズルで楽しく覚えよう！（Google Playアプリ）</div>
+        </div>
+        <div class="app-card-arrow">›</div>
+      </div>
+    </a>
+  </div>
+
+  <!-- 新聞を読もう -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-green">📰</div>
+      <div>
+        <div class="section-title" style="color:#10b981;">新聞を読もう</div>
+        <div class="section-desc">世の中のことを知ろう！</div>
+      </div>
+    </div>
+    <a class="app-card card-green" href="https://classroom.google.com/c/NjIyMzMzNTY4Mjk2/m/Nzc2NzEwMjEwMTY2/details" target="_blank">
+      <div class="app-card-inner">
+        <div class="app-card-icon">📰</div>
+        <div class="app-card-body">
+          <div class="app-card-title">新聞を読もう（Google Classroom）</div>
+          <div class="app-card-desc">クラスルームから読んでみよう！</div>
+        </div>
+        <div class="app-card-arrow">›</div>
+      </div>
+    </a>
+  </div>
+
+</div>
+
+<footer>
+  <p>「あったらいいのに」を、作ってる。</p>
+  <p>© 2026 野村晃一 All rights reserved.</p>
+</footer>
+
+</body>
+</html>
