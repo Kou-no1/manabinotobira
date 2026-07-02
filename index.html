@@ -6,30 +6,21 @@
 <title>まなびのとびら</title>
 <link href="https://fonts.googleapis.com/css2?family=Yomogi&family=Fredoka+One&display=swap" rel="stylesheet">
 <style>
-/* ══════════════════════════════
-   トークン
-══════════════════════════════ */
 :root {
   --bg:       #0A1628;
   --bg2:      #111f38;
   --white:    #E8F4FF;
   --dim:      rgba(232,244,255,0.55);
-
-  /* 惑星カラー（セクションごと） */
-  --science:  #00E5FF;   /* 理科  ─ シアン     */
-  --math:     #FFD700;   /* 算数  ─ ゴールド   */
-  --prog:     #39FF14;   /* プログラミング ─ グリーン */
-  --type:     #C77DFF;   /* タイピング ─ パープル */
-  --geo:      #FF6B6B;   /* 地理  ─ コーラル   */
-  --news:     #4FC3F7;   /* 新聞  ─ スカイ     */
-
+  --science:  #00E5FF;
+  --math:     #FFD700;
+  --social:   #FF6B6B;
+  --prog:     #39FF14;
+  --type:     #C77DFF;
+  --body:     #FF9F43;
+  --news:     #4FC3F7;
   --radius-card: 20px;
   --radius-pill: 999px;
 }
-
-/* ══════════════════════════════
-   リセット・ベース
-══════════════════════════════ */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body {
@@ -41,34 +32,23 @@ body {
 }
 a { color: inherit; text-decoration: none; }
 
-/* ══════════════════════════════
-   星空（固定背景）
-══════════════════════════════ */
-#starfield {
-  position: fixed; inset: 0;
-  pointer-events: none; z-index: 0;
-}
+/* 星空 */
+#starfield { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
 .star {
-  position: absolute; border-radius: 50%;
-  background: white;
+  position: absolute; border-radius: 50%; background: white;
   animation: twinkle var(--d) ease-in-out infinite;
-  animation-delay: var(--delay);
-  opacity: 0;
+  animation-delay: var(--delay); opacity: 0;
 }
 @keyframes twinkle {
   0%,100% { opacity: 0; transform: scale(0.7); }
   50%      { opacity: var(--o); transform: scale(1.3); }
 }
 
-/* ══════════════════════════════
-   流れ星
-══════════════════════════════ */
+/* 流れ星 */
 .shooting-star {
-  position: fixed;
-  width: 2px; height: 80px;
+  position: fixed; width: 2px; height: 80px;
   background: linear-gradient(to bottom, rgba(255,255,255,0), white);
-  border-radius: 2px;
-  pointer-events: none; z-index: 0;
+  border-radius: 2px; pointer-events: none; z-index: 0;
   animation: shoot 1.2s ease-out forwards;
   transform-origin: top center;
 }
@@ -77,292 +57,173 @@ a { color: inherit; text-decoration: none; }
   to   { opacity: 0; transform: translateY(300px) rotate(var(--angle)); }
 }
 
-/* ══════════════════════════════
-   ヒーロー
-══════════════════════════════ */
+/* ヒーロー */
 #hero {
   position: relative; z-index: 1;
   display: flex; flex-direction: column; align-items: center;
   justify-content: center;
   padding: 4rem 1rem 3rem;
-  text-align: center;
-  min-height: 52vh;
+  text-align: center; min-height: 52vh;
 }
-
-/* 自転する惑星SVG */
 .hero-planet {
-  width: 110px; height: 110px;
-  margin-bottom: 1.6rem;
+  width: 110px; height: 110px; margin-bottom: 1.6rem;
   animation: spin 18s linear infinite;
   filter: drop-shadow(0 0 24px rgba(0,229,255,0.5));
 }
 @keyframes spin { to { transform: rotate(360deg); } }
-
 .hero-title {
   font-family: 'Fredoka One', cursive;
   font-size: clamp(2.4rem, 7vw, 4rem);
   background: linear-gradient(135deg, #00E5FF 0%, #C77DFF 50%, #FFD700 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text;
-  letter-spacing: 0.06em;
-  line-height: 1.1;
+  background-clip: text; letter-spacing: 0.06em; line-height: 1.1;
 }
-.hero-sub {
-  margin-top: 0.9rem;
-  font-size: 1.05rem;
-  color: var(--dim);
-  letter-spacing: 0.12em;
-}
-
-/* ナビゲーションピル */
+.hero-sub { margin-top: 0.9rem; font-size: 1.05rem; color: var(--dim); letter-spacing: 0.12em; }
 .nav-pills {
   display: flex; flex-wrap: wrap; gap: 0.6rem;
-  justify-content: center;
-  margin-top: 2rem;
+  justify-content: center; margin-top: 2rem;
 }
 .nav-pill {
-  padding: 0.45rem 1.1rem;
-  border-radius: var(--radius-pill);
-  background: rgba(255,255,255,0.06);
-  border: 1.5px solid rgba(255,255,255,0.12);
-  font-size: 0.85rem;
-  color: var(--dim);
-  cursor: pointer;
-  transition: background 0.2s, border-color 0.2s, color 0.2s;
-  letter-spacing: 0.05em;
+  padding: 0.45rem 1.1rem; border-radius: var(--radius-pill);
+  background: rgba(255,255,255,0.06); border: 1.5px solid rgba(255,255,255,0.12);
+  font-size: 0.85rem; color: var(--dim); cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s; letter-spacing: 0.05em;
 }
-.nav-pill:hover {
-  background: rgba(255,255,255,0.12);
-  border-color: rgba(255,255,255,0.3);
-  color: var(--white);
-}
+.nav-pill:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.3); color: var(--white); }
 
-/* ══════════════════════════════
-   セクション共通
-══════════════════════════════ */
+/* セクション共通 */
 .planet-section {
   position: relative; z-index: 1;
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 0 1.2rem 4.5rem;
-
-  /* スクロール出現 */
-  opacity: 0;
-  transform: translateY(40px);
+  max-width: 1000px; margin: 0 auto; padding: 0 1.2rem 4.5rem;
+  opacity: 0; transform: translateY(40px);
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
-.planet-section.visible {
-  opacity: 1; transform: translateY(0);
-}
-
-/* セクションヘッダー */
+.planet-section.visible { opacity: 1; transform: translateY(0); }
 .section-header {
   display: flex; align-items: center; gap: 1rem;
-  margin-bottom: 1.4rem;
-  padding-bottom: 0.9rem;
+  margin-bottom: 1.4rem; padding-bottom: 0.9rem;
   border-bottom: 2px solid rgba(255,255,255,0.06);
 }
 .section-orb {
-  width: 48px; height: 48px; flex-shrink: 0;
-  border-radius: 50%;
-  background: var(--planet-color);
-  box-shadow: 0 0 20px var(--planet-color);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.5rem;
+  width: 48px; height: 48px; flex-shrink: 0; border-radius: 50%;
+  background: var(--planet-color); box-shadow: 0 0 20px var(--planet-color);
+  display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
 }
-.section-title-wrap {}
 .section-eyebrow {
-  font-family: 'Fredoka One', cursive;
-  font-size: 0.72rem;
-  letter-spacing: 0.18em;
-  color: var(--planet-color);
-  text-transform: uppercase;
+  font-family: 'Fredoka One', cursive; font-size: 0.72rem;
+  letter-spacing: 0.18em; color: var(--planet-color); text-transform: uppercase;
 }
-.section-title {
-  font-size: 1.35rem;
-  font-weight: bold;
-  letter-spacing: 0.05em;
-  line-height: 1.2;
-}
+.section-title { font-size: 1.35rem; font-weight: bold; letter-spacing: 0.05em; line-height: 1.2; }
 
-/* ── カードグリッド ── */
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 1rem;
-}
+/* カードグリッド */
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
 
 /* メインカード */
 .card {
   display: flex; flex-direction: column;
-  background: rgba(255,255,255,0.04);
-  border: 1.5px solid rgba(255,255,255,0.08);
-  border-radius: var(--radius-card);
-  padding: 1.4rem 1.3rem;
-  cursor: pointer;
-  transition:
-    transform 0.25s cubic-bezier(.34,1.56,.64,1),
-    box-shadow 0.25s,
-    border-color 0.25s,
-    background 0.25s;
-  position: relative; overflow: hidden;
-  gap: 0.55rem;
+  background: rgba(255,255,255,0.04); border: 1.5px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius-card); padding: 1.4rem 1.3rem; cursor: pointer;
+  transition: transform 0.25s cubic-bezier(.34,1.56,.64,1), box-shadow 0.25s, border-color 0.25s, background 0.25s;
+  position: relative; overflow: hidden; gap: 0.55rem;
 }
 .card::after {
-  content: '';
-  position: absolute; inset: 0;
+  content: ''; position: absolute; inset: 0;
   background: radial-gradient(circle at 30% 30%, var(--planet-color) 0%, transparent 65%);
-  opacity: 0;
-  transition: opacity 0.3s;
-  pointer-events: none;
-  border-radius: inherit;
+  opacity: 0; transition: opacity 0.3s; pointer-events: none; border-radius: inherit;
 }
 .card:hover {
-  transform: translateY(-7px) scale(1.02);
-  border-color: var(--planet-color);
+  transform: translateY(-7px) scale(1.02); border-color: var(--planet-color);
   background: rgba(255,255,255,0.07);
   box-shadow: 0 10px 32px rgba(0,0,0,0.4), 0 0 18px color-mix(in srgb, var(--planet-color) 40%, transparent);
 }
 .card:hover::after { opacity: 0.06; }
-
 .card-emoji { font-size: 2rem; line-height: 1; }
-.card-name {
-  font-size: 1.05rem; font-weight: bold;
-  letter-spacing: 0.04em; line-height: 1.35;
-  flex: 1;
-}
-.card-desc {
-  font-size: 0.8rem; color: var(--dim);
-  line-height: 1.5; letter-spacing: 0.03em;
+.card-name { font-size: 1.05rem; font-weight: bold; letter-spacing: 0.04em; line-height: 1.35; flex: 1; }
+.card-desc { font-size: 0.8rem; color: var(--dim); line-height: 1.5; letter-spacing: 0.03em; }
+.card-notice {
+  display: inline-block; margin-top: 0.4rem;
+  background: rgba(255,215,0,0.15); border: 1px solid rgba(255,215,0,0.3);
+  color: #FFD700; font-size: 0.75rem; padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-pill); line-height: 1.4;
 }
 .card-cta {
-  display: inline-flex; align-items: center; gap: 0.35rem;
-  margin-top: 0.5rem;
-  background: var(--planet-color);
-  color: #0A1628;
-  font-family: 'Fredoka One', cursive;
-  font-size: 0.82rem;
-  padding: 0.32rem 0.95rem;
-  border-radius: var(--radius-pill);
-  align-self: flex-start;
-  letter-spacing: 0.05em;
-  transition: transform 0.2s, box-shadow 0.2s;
+  display: inline-flex; align-items: center; gap: 0.35rem; margin-top: 0.5rem;
+  background: var(--planet-color); color: #0A1628;
+  font-family: 'Fredoka One', cursive; font-size: 0.82rem;
+  padding: 0.32rem 0.95rem; border-radius: var(--radius-pill); align-self: flex-start;
+  letter-spacing: 0.05em; transition: transform 0.2s, box-shadow 0.2s;
 }
 .card:hover .card-cta {
   transform: scale(1.06);
   box-shadow: 0 4px 14px color-mix(in srgb, var(--planet-color) 55%, transparent);
 }
 
-/* ── ランキングバッジ群 ── */
+/* ランキングブロック */
 .ranking-block {
-  margin-top: 0.8rem;
-  background: rgba(255,255,255,0.03);
-  border: 1.5px solid rgba(255,255,255,0.07);
-  border-radius: 14px;
-  padding: 1rem 1.2rem;
+  margin-top: 0.8rem; background: rgba(255,255,255,0.03);
+  border: 1.5px solid rgba(255,255,255,0.07); border-radius: 14px; padding: 1rem 1.2rem;
 }
 .ranking-label {
-  font-size: 0.75rem;
-  color: var(--planet-color);
-  letter-spacing: 0.12em;
-  font-family: 'Fredoka One', cursive;
-  margin-bottom: 0.55rem;
+  font-size: 0.75rem; color: var(--planet-color);
+  letter-spacing: 0.12em; font-family: 'Fredoka One', cursive; margin-bottom: 0.55rem;
 }
-.badge-row {
-  display: flex; flex-wrap: wrap; gap: 0.5rem;
-}
+.badge-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 .badge-link {
   display: inline-flex; align-items: center; gap: 0.25rem;
-  padding: 0.28rem 0.8rem;
-  border-radius: var(--radius-pill);
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.12);
-  font-size: 0.78rem;
-  color: var(--white);
-  cursor: pointer;
-  transition: background 0.2s, border-color 0.2s;
-  letter-spacing: 0.04em;
+  padding: 0.28rem 0.8rem; border-radius: var(--radius-pill);
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+  font-size: 0.78rem; color: var(--white); cursor: pointer;
+  transition: background 0.2s, border-color 0.2s; letter-spacing: 0.04em;
 }
-.badge-link:hover {
-  background: rgba(255,255,255,0.13);
-  border-color: var(--planet-color);
-  color: var(--planet-color);
-}
+.badge-link:hover { background: rgba(255,255,255,0.13); border-color: var(--planet-color); color: var(--planet-color); }
 
-/* ── ランキング付きカード（タイピング等） ── */
+/* ランキング付きカード */
 .card-with-ranking {
   display: flex; flex-direction: column; gap: 0.8rem;
-  background: rgba(255,255,255,0.04);
-  border: 1.5px solid rgba(255,255,255,0.08);
-  border-radius: var(--radius-card);
-  padding: 1.4rem 1.3rem;
+  background: rgba(255,255,255,0.04); border: 1.5px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius-card); padding: 1.4rem 1.3rem;
   position: relative; overflow: hidden;
   transition: border-color 0.25s, background 0.25s, transform 0.25s cubic-bezier(.34,1.56,.64,1);
 }
-.card-with-ranking:hover {
-  border-color: var(--planet-color);
-  background: rgba(255,255,255,0.06);
-  transform: translateY(-4px);
-}
-.card-top {
-  display: flex; align-items: flex-start; gap: 0.7rem;
-}
+.card-with-ranking:hover { border-color: var(--planet-color); background: rgba(255,255,255,0.06); transform: translateY(-4px); }
+.card-top { display: flex; align-items: flex-start; gap: 0.7rem; }
 .card-top .card-emoji { font-size: 1.8rem; margin-top: 0.1rem; }
-.card-top-text {}
-.card-top-name {
-  font-size: 1rem; font-weight: bold; letter-spacing: 0.04em;
-}
-.card-top-desc {
-  font-size: 0.76rem; color: var(--dim); margin-top: 0.2rem; line-height: 1.4;
-}
+.card-top-name { font-size: 1rem; font-weight: bold; letter-spacing: 0.04em; }
+.card-top-desc { font-size: 0.76rem; color: var(--dim); margin-top: 0.2rem; line-height: 1.4; }
 .card-top-cta {
-  display: inline-flex; align-items: center; gap: 0.3rem;
-  margin-top: 0.5rem;
-  background: var(--planet-color);
-  color: #0A1628;
-  font-family: 'Fredoka One', cursive;
-  font-size: 0.78rem;
-  padding: 0.28rem 0.85rem;
-  border-radius: var(--radius-pill);
-  letter-spacing: 0.04em;
-  transition: transform 0.2s;
+  display: inline-flex; align-items: center; gap: 0.3rem; margin-top: 0.5rem;
+  background: var(--planet-color); color: #0A1628;
+  font-family: 'Fredoka One', cursive; font-size: 0.78rem;
+  padding: 0.28rem 0.85rem; border-radius: var(--radius-pill);
+  letter-spacing: 0.04em; transition: transform 0.2s;
 }
 .card-with-ranking:hover .card-top-cta { transform: scale(1.05); }
 
-/* ── セクション色の適用 ── */
+/* セクション色 */
 .sec-science { --planet-color: var(--science); }
 .sec-math    { --planet-color: var(--math); }
+.sec-social  { --planet-color: var(--social); }
 .sec-prog    { --planet-color: var(--prog); }
 .sec-type    { --planet-color: var(--type); }
-.sec-geo     { --planet-color: var(--geo); }
+.sec-body    { --planet-color: var(--body); }
 .sec-news    { --planet-color: var(--news); }
 
-/* ── 仕切り ── */
 .orbit-divider {
   position: relative; z-index: 1;
-  max-width: 1000px; margin: 0 auto 0;
-  padding: 0 1.2rem;
+  max-width: 1000px; margin: 0 auto 0; padding: 0 1.2rem;
   height: 1px;
   background: linear-gradient(to right, transparent, rgba(255,255,255,0.07), transparent);
 }
 
-/* ══════════════════════════════
-   フッター
-══════════════════════════════ */
+/* フッター */
 footer {
-  position: relative; z-index: 1;
-  text-align: center;
-  padding: 2.5rem 1rem 2rem;
-  font-size: 0.78rem;
-  color: rgba(232,244,255,0.3);
-  letter-spacing: 0.06em;
+  position: relative; z-index: 1; text-align: center;
+  padding: 2.5rem 1rem 2rem; font-size: 0.78rem;
+  color: rgba(232,244,255,0.3); letter-spacing: 0.06em;
   border-top: 1px solid rgba(255,255,255,0.04);
 }
 footer span { color: rgba(232,244,255,0.5); }
 
-/* ══════════════════════════════
-   レスポンシブ
-══════════════════════════════ */
 @media (max-width: 600px) {
   .cards { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
   .card  { padding: 1.1rem 1rem; }
@@ -370,11 +231,7 @@ footer span { color: rgba(232,244,255,0.5); }
   .card-desc { display: none; }
   .hero-planet { width: 80px; height: 80px; }
 }
-@media (max-width: 380px) {
-  .cards { grid-template-columns: 1fr; }
-}
-
-/* reduced motion */
+@media (max-width: 380px) { .cards { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) {
   .hero-planet, .star { animation: none; }
   .planet-section { opacity: 1; transform: none; transition: none; }
@@ -383,12 +240,10 @@ footer span { color: rgba(232,244,255,0.5); }
 </head>
 <body>
 
-<!-- ══ 星空 ══ -->
 <div id="starfield"></div>
 
-<!-- ══ ヒーロー ══ -->
+<!-- ヒーロー -->
 <section id="hero">
-  <!-- 自転する惑星 -->
   <svg class="hero-planet" viewBox="0 0 110 110" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <radialGradient id="pg" cx="38%" cy="35%">
@@ -402,39 +257,31 @@ footer span { color: rgba(232,244,255,0.5); }
       </radialGradient>
       <clipPath id="pc"><circle cx="55" cy="55" r="40"/></clipPath>
     </defs>
-    <!-- 惑星本体 -->
     <circle cx="55" cy="55" r="40" fill="url(#pg)"/>
-    <!-- 大陸っぽい模様 -->
     <ellipse cx="42" cy="48" rx="13" ry="8" fill="#2E7D32" opacity="0.7" clip-path="url(#pc)"/>
     <ellipse cx="66" cy="60" rx="9"  ry="6" fill="#1B5E20" opacity="0.6" clip-path="url(#pc)"/>
     <ellipse cx="50" cy="68" rx="7"  ry="4" fill="#2E7D32" opacity="0.5" clip-path="url(#pc)"/>
-    <!-- 雲 -->
     <ellipse cx="55" cy="38" rx="16" ry="4" fill="rgba(255,255,255,0.18)" clip-path="url(#pc)"/>
     <ellipse cx="38" cy="60" rx="10" ry="3" fill="rgba(255,255,255,0.12)" clip-path="url(#pc)"/>
-    <!-- 光沢 -->
     <circle cx="55" cy="55" r="40" fill="url(#pg2)"/>
-    <!-- 輪っか -->
     <ellipse cx="55" cy="56" rx="56" ry="12" fill="none" stroke="rgba(0,229,255,0.35)" stroke-width="3"/>
     <ellipse cx="55" cy="56" rx="50" ry="10" fill="none" stroke="rgba(199,125,255,0.2)" stroke-width="1.5"/>
   </svg>
-
   <h1 class="hero-title">まなびのとびら</h1>
   <p class="hero-sub">べんきょうを　もっと　たのしく！</p>
-
   <nav class="nav-pills">
     <a class="nav-pill" href="#science">🔬 理科</a>
     <a class="nav-pill" href="#math">⭐ 算数</a>
+    <a class="nav-pill" href="#social">🗾 社会</a>
     <a class="nav-pill" href="#prog">💻 プログラミング</a>
     <a class="nav-pill" href="#typing">⌨️ タイピング</a>
-    <a class="nav-pill" href="#geo">🗾 地理</a>
+    <a class="nav-pill" href="#body">🫀 人体</a>
     <a class="nav-pill" href="#news">📰 新聞</a>
   </nav>
 </section>
 
 
-<!-- ══════════════════════════════
-     🔬 理科
-══════════════════════════════ -->
+<!-- 🔬 理科 -->
 <div class="orbit-divider"></div>
 <section class="planet-section sec-science" id="science">
   <div class="section-header">
@@ -449,7 +296,14 @@ footer span { color: rgba(232,244,255,0.5); }
     <a class="card" href="https://kou-no1.github.io/detective-science/" target="_blank" rel="noopener">
       <span class="card-emoji">🕵️</span>
       <div class="card-name">理科捜査局</div>
-      <div class="card-desc">科学の力で謎を解き明かせ！考察力がぐんぐん育つ！</div>
+      <div class="card-desc">科学の力で謎を解き明かせ！ドキドキハラハラ謎解きで考察力がぐんぐん育つ！</div>
+      <span class="card-cta">▶ 開く</span>
+    </a>
+
+    <a class="card" href="https://kou-no1.github.io/science-RPG/" target="_blank" rel="noopener">
+      <span class="card-emoji">⚗️</span>
+      <div class="card-name">サイエンス・クエスト</div>
+      <div class="card-desc">サイエンスワールドを冒険しながら、科学の世界を楽しもう！</div>
       <span class="card-cta">▶ 開く</span>
     </a>
 
@@ -464,9 +318,7 @@ footer span { color: rgba(232,244,255,0.5); }
 </section>
 
 
-<!-- ══════════════════════════════
-     ⭐ 算数
-══════════════════════════════ -->
+<!-- ⭐ 算数 -->
 <div class="orbit-divider"></div>
 <section class="planet-section sec-math" id="math">
   <div class="section-header">
@@ -481,7 +333,8 @@ footer span { color: rgba(232,244,255,0.5); }
     <a class="card" href="https://kou-no1.github.io/math-planet/" target="_blank" rel="noopener">
       <span class="card-emoji">🚀</span>
       <div class="card-name">けいさんのほし</div>
-      <div class="card-desc">宇宙を旅しながら計算が得意になる！九九から分数まで。全制覇で称号ゲット！？</div>
+      <div class="card-desc">宇宙を旅しながら計算が得意になる！九九から分数まで。高学年モードは平方数や円周率九九も完備。</div>
+      <span class="card-notice">🏆 全制覇で「？？？？？？？？」の称号を手に入れられるか！？</span>
       <span class="card-cta">▶ 開く</span>
     </a>
 
@@ -489,9 +342,56 @@ footer span { color: rgba(232,244,255,0.5); }
 </section>
 
 
-<!-- ══════════════════════════════
-     💻 プログラミング
-══════════════════════════════ -->
+<!-- 🗾 社会 -->
+<div class="orbit-divider"></div>
+<section class="planet-section sec-social" id="social">
+  <div class="section-header">
+    <div class="section-orb">🗾</div>
+    <div class="section-title-wrap">
+      <div class="section-eyebrow">SOCIAL STUDIES</div>
+      <div class="section-title">社会</div>
+    </div>
+  </div>
+  <div class="cards">
+
+    <!-- 都道府県パズル（ランキング付き） -->
+    <div class="card-with-ranking">
+      <div class="card-top">
+        <span class="card-emoji">🗺️</span>
+        <div class="card-top-text">
+          <div class="card-top-name">都道府県パズル</div>
+          <div class="card-top-desc">都道府県の位置をパズルで覚えよう！君は県庁所在地も制覇できるか？！</div>
+          <a class="card-top-cta" href="https://kou-no1.github.io/todofuken/" target="_blank" rel="noopener">▶ 開く</a>
+        </div>
+      </div>
+      <div class="ranking-block">
+        <div class="ranking-label">🏆 中央小ランキング</div>
+        <div class="badge-row">
+          <a class="badge-link" href="https://docs.google.com/forms/d/e/1FAIpQLSfG8HFSlOMNhnkMOT9zB1U_UiL2AoWYPCQS7Ijd-kRtzifPOQ/viewform" target="_blank" rel="noopener">📝 記録を登録</a>
+          <a class="badge-link" href="https://kou-no1.github.io/todofuken/todofuken_ranking.html" target="_blank" rel="noopener">🥇 ランキングを見る</a>
+        </div>
+      </div>
+    </div>
+
+    <a class="card" href="https://kou-no1.github.io/chizukigo/" target="_blank" rel="noopener">
+      <span class="card-emoji">🗾</span>
+      <div class="card-name">地図記号クイズ</div>
+      <div class="card-desc">目指せ地図記号博士！苦手な子も得意になれる！</div>
+      <span class="card-cta">▶ 開く</span>
+    </a>
+
+    <a class="card" href="https://kou-no1.github.io/rekishi-quiz/" target="_blank" rel="noopener">
+      <span class="card-emoji">🏯</span>
+      <div class="card-name">れきしクイズ</div>
+      <div class="card-desc">楽しいクイズで歴史上の人物を覚えよう！</div>
+      <span class="card-cta">▶ 開く</span>
+    </a>
+
+  </div>
+</section>
+
+
+<!-- 💻 プログラミング -->
 <div class="orbit-divider"></div>
 <section class="planet-section sec-prog" id="prog">
   <div class="section-header">
@@ -528,9 +428,7 @@ footer span { color: rgba(232,244,255,0.5); }
 </section>
 
 
-<!-- ══════════════════════════════
-     ⌨️ タイピング
-══════════════════════════════ -->
+<!-- ⌨️ タイピング -->
 <div class="orbit-divider"></div>
 <section class="planet-section sec-type" id="typing">
   <div class="section-header">
@@ -589,50 +487,22 @@ footer span { color: rgba(232,244,255,0.5); }
 </section>
 
 
-<!-- ══════════════════════════════
-     🗾 地理
-══════════════════════════════ -->
+<!-- 🫀 人体 -->
 <div class="orbit-divider"></div>
-<section class="planet-section sec-geo" id="geo">
+<section class="planet-section sec-body" id="body">
   <div class="section-header">
-    <div class="section-orb">🗾</div>
+    <div class="section-orb">🫀</div>
     <div class="section-title-wrap">
-      <div class="section-eyebrow">GEOGRAPHY</div>
-      <div class="section-title">地理</div>
+      <div class="section-eyebrow">HUMAN BODY</div>
+      <div class="section-title">人体</div>
     </div>
   </div>
   <div class="cards">
 
-    <!-- 都道府県パズル -->
-    <div class="card-with-ranking">
-      <div class="card-top">
-        <span class="card-emoji">🗺️</span>
-        <div class="card-top-text">
-          <div class="card-top-name">都道府県パズル</div>
-          <div class="card-top-desc">都道府県の位置をパズルで覚えよう！</div>
-          <a class="card-top-cta" href="https://kou-no1.github.io/todofuken/" target="_blank" rel="noopener">▶ 開く</a>
-        </div>
-      </div>
-      <div class="ranking-block">
-        <div class="ranking-label">🏆 中央小ランキング</div>
-        <div class="badge-row">
-          <a class="badge-link" href="https://docs.google.com/forms/d/e/1FAIpQLSfG8HFSlOMNhnkMOT9zB1U_UiL2AoWYPCQS7Ijd-kRtzifPOQ/viewform" target="_blank" rel="noopener">📝 登録</a>
-          <a class="badge-link" href="https://kou-no1.github.io/todofuken/todofuken_ranking.html" target="_blank" rel="noopener">🥇 ランキング</a>
-        </div>
-      </div>
-    </div>
-
-    <a class="card" href="https://kou-no1.github.io/chizukigo/" target="_blank" rel="noopener">
-      <span class="card-emoji">🗾</span>
-      <div class="card-name">地図記号クイズ</div>
-      <div class="card-desc">目指せ地図記号博士！</div>
-      <span class="card-cta">▶ 開く</span>
-    </a>
-
     <a class="card" href="https://play.google.com/store/apps/details?id=com.digitalgene.anatomypuzzle" target="_blank" rel="noopener">
       <span class="card-emoji">🫀</span>
       <div class="card-name">人体模型パズル</div>
-      <div class="card-desc">体の臓器の位置をパズルで楽しく覚えよう！（Google Play）</div>
+      <div class="card-desc">体の臓器の位置をパズルで楽しく覚えよう！（Google Playアプリ）</div>
       <span class="card-cta">▶ 開く</span>
     </a>
 
@@ -640,9 +510,7 @@ footer span { color: rgba(232,244,255,0.5); }
 </section>
 
 
-<!-- ══════════════════════════════
-     📰 新聞
-══════════════════════════════ -->
+<!-- 📰 新聞 -->
 <div class="orbit-divider"></div>
 <section class="planet-section sec-news" id="news">
   <div class="section-header">
@@ -665,7 +533,7 @@ footer span { color: rgba(232,244,255,0.5); }
 </section>
 
 
-<!-- ══ フッター ══ -->
+<!-- フッター -->
 <footer>
   <p>🌟 まなびのとびら</p>
   <p style="margin-top:0.4rem">「あったらいいのに」を、作ってる。&nbsp;&nbsp;<span>© 2026 野村晃一</span></p>
@@ -673,7 +541,7 @@ footer span { color: rgba(232,244,255,0.5); }
 
 
 <script>
-/* ── 星生成 ── */
+/* 星生成 */
 (function(){
   const sf = document.getElementById('starfield');
   for(let i=0;i<150;i++){
@@ -681,25 +549,25 @@ footer span { color: rgba(232,244,255,0.5); }
     s.className = 'star';
     const sz = Math.random()*2.2+0.4;
     Object.assign(s.style, {
-      width:  sz+'px', height: sz+'px',
-      top:    Math.random()*100+'%',
-      left:   Math.random()*100+'%',
-      '--d':  (Math.random()*4+2).toFixed(1)+'s',
+      width: sz+'px', height: sz+'px',
+      top: Math.random()*100+'%',
+      left: Math.random()*100+'%',
+      '--d': (Math.random()*4+2).toFixed(1)+'s',
       '--delay': (Math.random()*6).toFixed(1)+'s',
-      '--o':  (Math.random()*0.75+0.15).toFixed(2),
+      '--o': (Math.random()*0.75+0.15).toFixed(2),
     });
     sf.appendChild(s);
   }
 })();
 
-/* ── 流れ星 ── */
+/* 流れ星 */
 function shootStar(){
   const el = document.createElement('div');
   el.className = 'shooting-star';
-  const angle = Math.random()*30 + 30;
+  const angle = Math.random()*30+30;
   Object.assign(el.style, {
-    top:   Math.random()*40+'%',
-    left:  Math.random()*80+'%',
+    top: Math.random()*40+'%',
+    left: Math.random()*80+'%',
     '--angle': angle+'deg',
   });
   document.body.appendChild(el);
@@ -708,13 +576,10 @@ function shootStar(){
 setInterval(shootStar, 4000);
 setTimeout(shootStar, 1200);
 
-/* ── スクロール出現 ── */
+/* スクロール出現 */
 const observer = new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting) e.target.classList.add('visible');
-  });
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1 });
-
 document.querySelectorAll('.planet-section').forEach(s=>observer.observe(s));
 </script>
 </body>
