@@ -236,6 +236,63 @@ footer span { color: rgba(232,244,255,0.5); }
   .hero-planet, .star { animation: none; }
   .planet-section { opacity: 1; transform: none; transition: none; }
 }
+
+/* NEWコーナー */
+.new-banner-wrap {
+  position: relative; z-index: 1;
+  max-width: 1000px; margin: 0 auto;
+  padding: 0 1.2rem 3rem;
+}
+.new-banner {
+  display: flex; align-items: center; gap: 1.1rem;
+  background: linear-gradient(120deg, rgba(255,107,107,0.12), rgba(199,125,255,0.10));
+  border: 1.5px solid rgba(255,107,107,0.35);
+  border-radius: var(--radius-card);
+  padding: 1.1rem 1.3rem;
+  position: relative; overflow: hidden;
+  transition: transform 0.2s, border-color 0.2s, background 0.2s;
+  animation: newGlow 2.6s ease-in-out infinite;
+}
+.new-banner:hover {
+  transform: translateY(-3px);
+  border-color: #FF6B6B;
+  background: linear-gradient(120deg, rgba(255,107,107,0.2), rgba(199,125,255,0.16));
+}
+@keyframes newGlow {
+  0%,100% { box-shadow: 0 0 0 rgba(255,107,107,0); }
+  50%      { box-shadow: 0 0 22px rgba(255,107,107,0.25); }
+}
+.new-badge {
+  flex-shrink: 0;
+  font-family: 'Fredoka One', cursive;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  background: linear-gradient(135deg, #FF6B6B, #C77DFF);
+  color: #0A1628;
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--radius-pill);
+  animation: newPulse 1.6s ease-in-out infinite;
+}
+@keyframes newPulse {
+  0%,100% { transform: scale(1); }
+  50%      { transform: scale(1.08); }
+}
+.new-emoji { font-size: 1.9rem; flex-shrink: 0; }
+.new-text { flex: 1; min-width: 0; }
+.new-title {
+  font-size: 1rem; font-weight: bold; letter-spacing: 0.04em;
+  color: var(--white);
+}
+.new-desc {
+  font-size: 0.8rem; color: var(--dim); margin-top: 0.15rem; line-height: 1.5;
+}
+.new-arrow {
+  flex-shrink: 0; font-size: 1.4rem; color: #FF6B6B;
+}
+@media (max-width: 480px) {
+  .new-banner { flex-wrap: wrap; gap: 0.6rem; padding: 1rem 1.1rem; }
+  .new-desc { font-size: 0.74rem; }
+}
 </style>
 </head>
 <body>
@@ -279,6 +336,19 @@ footer span { color: rgba(232,244,255,0.5); }
     <a class="nav-pill" href="#news">📰 新聞</a>
   </nav>
 </section>
+
+<!-- NEW コーナー -->
+<div class="new-banner-wrap">
+  <a class="new-banner" href="https://kou-no1.github.io/shakai-journey/shakai-quest/" target="_blank" rel="noopener">
+    <span class="new-badge">✨ NEW</span>
+    <span class="new-emoji">⛩️</span>
+    <div class="new-text">
+      <div class="new-title">シャカイ・クエスト が新登場！</div>
+      <div class="new-desc">日本各地や時空を旅しながら"御朱印"を集めよう！</div>
+    </div>
+    <span class="new-arrow">›</span>
+  </a>
+</div>
 
 
 <!-- 🔬 理科 -->
@@ -384,6 +454,13 @@ footer span { color: rgba(232,244,255,0.5); }
       <span class="card-emoji">🏯</span>
       <div class="card-name">れきしクイズ</div>
       <div class="card-desc">楽しいクイズで歴史上の人物を覚えよう！</div>
+      <span class="card-cta">▶ 開く</span>
+    </a>
+
+    <a class="card" href="https://kou-no1.github.io/shakai-journey/shakai-quest/" target="_blank" rel="noopener">
+      <span class="card-emoji">⛩️</span>
+      <div class="card-name">シャカイ・クエスト</div>
+      <div class="card-desc">日本各地や時空を旅しながら"御朱印"を集めよう！</div>
       <span class="card-cta">▶ 開く</span>
     </a>
 
