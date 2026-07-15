@@ -12,6 +12,7 @@
   --white:    #E8F4FF;
   --dim:      rgba(232,244,255,0.55);
   --science:  #00E5FF;
+  --kokugo:   #FF8FA3;
   --math:     #FFD700;
   --social:   #FF6B6B;
   --prog:     #39FF14;
@@ -199,8 +200,39 @@ a { color: inherit; text-decoration: none; }
 }
 .card-with-ranking:hover .card-top-cta { transform: scale(1.05); }
 
+/* 算数アタック問題（学年グリッド） */
+.card-wide {
+  grid-column: 1 / -1;
+}
+.grade-grid {
+  display: flex; flex-wrap: wrap; gap: 0.55rem; margin-top: 0.6rem;
+}
+.grade-btn {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.4rem 0.9rem;
+  background: rgba(255,255,255,0.06);
+  border: 1.5px solid rgba(255,255,255,0.14);
+  border-radius: var(--radius-pill);
+  font-size: 0.82rem; color: var(--white);
+  font-family: 'Yomogi', cursive;
+  transition: transform 0.15s, border-color 0.15s, background 0.15s;
+}
+.grade-btn:hover {
+  transform: translateY(-2px) scale(1.04);
+  border-color: var(--planet-color);
+  background: rgba(255,255,255,0.12);
+}
+.grade-num {
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--planet-color); color: #0A1628;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.72rem; font-weight: bold; flex-shrink: 0;
+  font-family: 'Fredoka One', cursive;
+}
+
 /* セクション色 */
 .sec-science { --planet-color: var(--science); }
+.sec-kokugo  { --planet-color: var(--kokugo); }
 .sec-math    { --planet-color: var(--math); }
 .sec-social  { --planet-color: var(--social); }
 .sec-prog    { --planet-color: var(--prog); }
@@ -328,6 +360,7 @@ footer span { color: rgba(232,244,255,0.5); }
   <p class="hero-sub">べんきょうを　もっと　たのしく！</p>
   <nav class="nav-pills">
     <a class="nav-pill" href="#science">🔬 理科</a>
+    <a class="nav-pill" href="#kokugo">📖 国語</a>
     <a class="nav-pill" href="#math">⭐ 算数</a>
     <a class="nav-pill" href="#social">🗾 社会</a>
     <a class="nav-pill" href="#prog">💻 プログラミング</a>
@@ -397,6 +430,29 @@ footer span { color: rgba(232,244,255,0.5); }
 </section>
 
 
+<!-- 📖 国語 -->
+<div class="orbit-divider"></div>
+<section class="planet-section sec-kokugo" id="kokugo">
+  <div class="section-header">
+    <div class="section-orb">📖</div>
+    <div class="section-title-wrap">
+      <div class="section-eyebrow">JAPANESE</div>
+      <div class="section-title">国語</div>
+    </div>
+  </div>
+  <div class="cards">
+
+    <a class="card" href="https://kou-no1.github.io/yoyaku-navi/" target="_blank" rel="noopener">
+      <span class="card-emoji">📝</span>
+      <div class="card-name">要約ナビ</div>
+      <div class="card-desc">5つのステップで要約マスターになろう！</div>
+      <span class="card-cta">▶ 開く</span>
+    </a>
+
+  </div>
+</section>
+
+
 <!-- ⭐ 算数 -->
 <div class="orbit-divider"></div>
 <section class="planet-section sec-math" id="math">
@@ -416,6 +472,20 @@ footer span { color: rgba(232,244,255,0.5); }
       <span class="card-notice">🏆 全制覇で「？？？？？？？？」の称号を手に入れられるか！？</span>
       <span class="card-cta">▶ 開く</span>
     </a>
+
+    <div class="card card-wide">
+      <span class="card-emoji">🔢</span>
+      <div class="card-name">算数アタック問題</div>
+      <div class="card-desc">学年ごとにチャレンジ！自分の学年をタップしよう</div>
+      <div class="grade-grid">
+        <a class="grade-btn" href="https://kou-no1.github.io/math-portal-01/" target="_blank" rel="noopener"><span class="grade-num">1</span>1年生</a>
+        <a class="grade-btn" href="https://kou-no1.github.io/math-portal-02/" target="_blank" rel="noopener"><span class="grade-num">2</span>2年生</a>
+        <a class="grade-btn" href="https://kou-no1.github.io/math-portal-03/" target="_blank" rel="noopener"><span class="grade-num">3</span>3年生</a>
+        <a class="grade-btn" href="https://kou-no1.github.io/math-portal-04/" target="_blank" rel="noopener"><span class="grade-num">4</span>4年生</a>
+        <a class="grade-btn" href="https://kou-no1.github.io/math-portal-05/" target="_blank" rel="noopener"><span class="grade-num">5</span>5年生</a>
+        <a class="grade-btn" href="https://kou-no1.github.io/math-portal-06/" target="_blank" rel="noopener"><span class="grade-num">6</span>6年生</a>
+      </div>
+    </div>
 
   </div>
 </section>
