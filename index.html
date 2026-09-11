@@ -13,8 +13,10 @@
   --dim:      rgba(232,244,255,0.55);
   --science:  #00E5FF;
   --kokugo:   #FF8FA3;
+  --kanji:    #E4572E;
   --math:     #FFD700;
   --social:   #FF6B6B;
+  --music:    #7055ED;
   --prog:     #39FF14;
   --type:     #C77DFF;
   --body:     #FF9F43;
@@ -233,8 +235,10 @@ a { color: inherit; text-decoration: none; }
 /* セクション色 */
 .sec-science { --planet-color: var(--science); }
 .sec-kokugo  { --planet-color: var(--kokugo); }
+.sec-kanji   { --planet-color: var(--kanji); }
 .sec-math    { --planet-color: var(--math); }
 .sec-social  { --planet-color: var(--social); }
+.sec-music   { --planet-color: var(--music); }
 .sec-prog    { --planet-color: var(--prog); }
 .sec-type    { --planet-color: var(--type); }
 .sec-body    { --planet-color: var(--body); }
@@ -361,8 +365,10 @@ footer span { color: rgba(232,244,255,0.5); }
   <nav class="nav-pills">
     <a class="nav-pill" href="#science">🔬 理科</a>
     <a class="nav-pill" href="#kokugo">📖 国語</a>
+    <a class="nav-pill" href="#kanji">📚 漢字</a>
     <a class="nav-pill" href="#math">⭐ 算数</a>
     <a class="nav-pill" href="#social">🗾 社会</a>
+    <a class="nav-pill" href="#music">🎵 音楽</a>
     <a class="nav-pill" href="#prog">💻 プログラミング</a>
     <a class="nav-pill" href="#typing">⌨️ タイピング</a>
     <a class="nav-pill" href="#body">🫀 人体</a>
@@ -372,21 +378,21 @@ footer span { color: rgba(232,244,255,0.5); }
 
 <!-- NEW コーナー -->
 <div class="new-banner-wrap" style="display:flex; flex-direction:column; gap:0.8rem;">
-  <a class="new-banner" href="https://kou-no1.github.io/shakai-journey/shakai-quest/" target="_blank" rel="noopener">
+  <a class="new-banner" href="https://kou-no1.github.io/kanken4/#/home" target="_blank" rel="noopener">
     <span class="new-badge">✨ NEW</span>
-    <span class="new-emoji">⛩️</span>
+    <span class="new-emoji">🖋️</span>
     <div class="new-text">
-      <div class="new-title">時空社会御朱印帳 が新登場！</div>
-      <div class="new-desc">日本各地や時空を旅しながら"御朱印"を集めよう！</div>
+      <div class="new-title">漢検４級合格への道 が新登場！</div>
+      <div class="new-desc">小学校６年生までの漢字はこれでばっちり！検定日を設定すると、カウントダウンして合格までサポート！</div>
     </div>
     <span class="new-arrow">›</span>
   </a>
-  <a class="new-banner" href="https://kou-no1.github.io/ninda-do/" target="_blank" rel="noopener">
+  <a class="new-banner" href="https://kou-no1.github.io/recorder-quest/dist/index.html" target="_blank" rel="noopener">
     <span class="new-badge">✨ NEW</span>
-    <span class="new-emoji">🥷</span>
+    <span class="new-emoji">🎼</span>
     <div class="new-text">
-      <div class="new-title">忍打道 -NINDA DO- が新登場！</div>
-      <div class="new-desc">確実に正しい指の型で打てる忍になれる道が、ただ一つ、ここにある。目指せタイピングの『影』…。</div>
+      <div class="new-title">リコーダークエスト が新登場！</div>
+      <div class="new-desc">運指・楽譜・お手本の音を、小さな挑戦で楽しく学べる！スタンプを集めながら自分だけの学習コースを進もう！</div>
     </div>
     <span class="new-arrow">›</span>
   </a>
@@ -446,6 +452,29 @@ footer span { color: rgba(232,244,255,0.5); }
       <span class="card-emoji">📝</span>
       <div class="card-name">要約ナビ</div>
       <div class="card-desc">5つのステップで要約マスターになろう！</div>
+      <span class="card-cta">▶ 開く</span>
+    </a>
+
+  </div>
+</section>
+
+
+<!-- 📚 漢字 -->
+<div class="orbit-divider"></div>
+<section class="planet-section sec-kanji" id="kanji">
+  <div class="section-header">
+    <div class="section-orb">📚</div>
+    <div class="section-title-wrap">
+      <div class="section-eyebrow">KANJI</div>
+      <div class="section-title">漢字</div>
+    </div>
+  </div>
+  <div class="cards">
+
+    <a class="card" href="https://kou-no1.github.io/kanken4/#/home" target="_blank" rel="noopener">
+      <span class="card-emoji">🖋️</span>
+      <div class="card-name">漢検４級合格への道</div>
+      <div class="card-desc">小学校６年生までの漢字はこれでばっちり！検定日を設定すると、カウントダウンして合格までサポート！</div>
       <span class="card-cta">▶ 開く</span>
     </a>
 
@@ -540,6 +569,29 @@ footer span { color: rgba(232,244,255,0.5); }
       <span class="card-emoji">⛩️</span>
       <div class="card-name">時空社会御朱印帳</div>
       <div class="card-desc">日本各地や時空を旅しながら"御朱印"を集めよう！</div>
+      <span class="card-cta">▶ 開く</span>
+    </a>
+
+  </div>
+</section>
+
+
+<!-- 🎵 音楽 -->
+<div class="orbit-divider"></div>
+<section class="planet-section sec-music" id="music">
+  <div class="section-header">
+    <div class="section-orb">🎵</div>
+    <div class="section-title-wrap">
+      <div class="section-eyebrow">MUSIC</div>
+      <div class="section-title">音楽</div>
+    </div>
+  </div>
+  <div class="cards">
+
+    <a class="card" href="https://kou-no1.github.io/recorder-quest/dist/index.html" target="_blank" rel="noopener">
+      <span class="card-emoji">🎼</span>
+      <div class="card-name">リコーダークエスト</div>
+      <div class="card-desc">運指・楽譜・お手本の音を、小さな挑戦で楽しく学べる！スタンプを集めながら自分だけの学習コースを進もう！</div>
       <span class="card-cta">▶ 開く</span>
     </a>
 
