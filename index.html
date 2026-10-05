@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="理科・国語・漢字・算数・社会・英語・道徳など、遊びながら学べる児童用アプリを集めた「まなびのとびら」。好きな教科から冒険をはじめよう！">
 <title>まなびのとびら</title>
 <link href="https://fonts.googleapis.com/css2?family=Yomogi&family=Fredoka+One&display=swap" rel="stylesheet">
 <style>
@@ -10,12 +11,14 @@
   --bg:       #0A1628;
   --bg2:      #111f38;
   --white:    #E8F4FF;
-  --dim:      rgba(232,244,255,0.55);
+  --dim:      rgba(232,244,255,0.78);
   --science:  #00E5FF;
   --kokugo:   #FF8FA3;
   --kanji:    #E4572E;
   --math:     #FFD700;
   --social:   #FF6B6B;
+  --english:  #7DE2C4;
+  --moral:    #FFC38C;
   --music:    #7055ED;
   --prog:     #39FF14;
   --type:     #C77DFF;
@@ -29,11 +32,15 @@ html { scroll-behavior: smooth; }
 body {
   background: var(--bg);
   color: var(--white);
-  font-family: 'Yomogi', cursive;
+  font-family: 'Yomogi', system-ui, sans-serif;
   overflow-x: hidden;
   min-height: 100vh;
 }
 a { color: inherit; text-decoration: none; }
+a:focus-visible, summary:focus-visible {
+  outline: 3px solid var(--white); outline-offset: 4px;
+  border-radius: 8px;
+}
 
 /* 星空 */
 #starfield { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
@@ -98,10 +105,8 @@ a { color: inherit; text-decoration: none; }
 .planet-section {
   position: relative; z-index: 1;
   max-width: 1000px; margin: 0 auto; padding: 0 1.2rem 4.5rem;
-  opacity: 0; transform: translateY(40px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  scroll-margin-top: 1.5rem;
 }
-.planet-section.visible { opacity: 1; transform: translateY(0); }
 .section-header {
   display: flex; align-items: center; gap: 1rem;
   margin-bottom: 1.4rem; padding-bottom: 0.9rem;
@@ -119,7 +124,12 @@ a { color: inherit; text-decoration: none; }
 .section-title { font-size: 1.35rem; font-weight: bold; letter-spacing: 0.05em; line-height: 1.2; }
 
 /* カードグリッド */
-.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
+.cards {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem; align-items: start;
+}
+.cards > :only-child { grid-column: 1 / -1; max-width: 620px; min-height: auto; }
+.sec-social .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
 /* メインカード */
 .card {
@@ -127,7 +137,8 @@ a { color: inherit; text-decoration: none; }
   background: rgba(255,255,255,0.04); border: 1.5px solid rgba(255,255,255,0.08);
   border-radius: var(--radius-card); padding: 1.4rem 1.3rem; cursor: pointer;
   transition: transform 0.25s cubic-bezier(.34,1.56,.64,1), box-shadow 0.25s, border-color 0.25s, background 0.25s;
-  position: relative; overflow: hidden; gap: 0.55rem;
+  position: relative; overflow: hidden; gap: 0.65rem;
+  min-width: 0; min-height: 270px;
 }
 .card::after {
   content: ''; position: absolute; inset: 0;
@@ -141,8 +152,11 @@ a { color: inherit; text-decoration: none; }
 }
 .card:hover::after { opacity: 0.06; }
 .card-emoji { font-size: 2rem; line-height: 1; }
-.card-name { font-size: 1.05rem; font-weight: bold; letter-spacing: 0.04em; line-height: 1.35; flex: 1; }
-.card-desc { font-size: 0.8rem; color: var(--dim); line-height: 1.5; letter-spacing: 0.03em; }
+.card-name { font-size: 1.1rem; font-weight: bold; letter-spacing: 0.04em; line-height: 1.45; }
+.card-desc, .card-top-desc {
+  font-family: system-ui, sans-serif; font-size: 0.9rem;
+  color: var(--dim); line-height: 1.8; overflow-wrap: anywhere;
+}
 .card-notice {
   display: inline-block; margin-top: 0.4rem;
   background: rgba(255,215,0,0.15); border: 1px solid rgba(255,215,0,0.3);
@@ -150,16 +164,35 @@ a { color: inherit; text-decoration: none; }
   border-radius: var(--radius-pill); line-height: 1.4;
 }
 .card-cta {
-  display: inline-flex; align-items: center; gap: 0.35rem; margin-top: 0.5rem;
+  display: inline-flex; align-items: center; gap: 0.35rem; margin-top: auto;
   background: var(--planet-color); color: #0A1628;
   font-family: 'Fredoka One', cursive; font-size: 0.82rem;
-  padding: 0.32rem 0.95rem; border-radius: var(--radius-pill); align-self: flex-start;
+  padding: 0.6rem 1rem; min-height: 44px;
+  border-radius: var(--radius-pill); align-self: flex-start;
   letter-spacing: 0.05em; transition: transform 0.2s, box-shadow 0.2s;
 }
 .card:hover .card-cta {
   transform: scale(1.06);
   box-shadow: 0 4px 14px color-mix(in srgb, var(--planet-color) 55%, transparent);
 }
+
+/* 長い紹介文は、好きなときにひらいて読める */
+.card-detailed { cursor: default; }
+.card-detailed:hover { transform: translateY(-4px); }
+.card-details { margin: 0.15rem 0 0.5rem; }
+.card-details summary {
+  width: fit-content; padding: 0.65rem 0.2rem; min-height: 44px;
+  font-size: 0.85rem; font-weight: bold; color: var(--white); cursor: pointer;
+}
+.detail-close, .card-details[open] .detail-open { display: none; }
+.card-details[open] .detail-close { display: inline; }
+.card-story {
+  padding-top: 0.6rem; border-top: 1px solid rgba(255,255,255,0.12);
+  font-family: system-ui, sans-serif; font-size: 0.9rem;
+  line-height: 1.9; color: var(--dim); overflow-wrap: anywhere;
+}
+.card-story p + p { margin-top: 0.85rem; }
+.card-story .card-lead, .card-story strong { color: var(--white); }
 
 /* ランキングブロック */
 .ranking-block {
@@ -185,26 +218,27 @@ a { color: inherit; text-decoration: none; }
   display: flex; flex-direction: column; gap: 0.8rem;
   background: rgba(255,255,255,0.04); border: 1.5px solid rgba(255,255,255,0.08);
   border-radius: var(--radius-card); padding: 1.4rem 1.3rem;
-  position: relative; overflow: hidden;
+  position: relative; overflow: hidden; min-width: 0; min-height: 270px;
   transition: border-color 0.25s, background 0.25s, transform 0.25s cubic-bezier(.34,1.56,.64,1);
 }
 .card-with-ranking:hover { border-color: var(--planet-color); background: rgba(255,255,255,0.06); transform: translateY(-4px); }
 .card-top { display: flex; align-items: flex-start; gap: 0.7rem; }
 .card-top .card-emoji { font-size: 1.8rem; margin-top: 0.1rem; }
-.card-top-name { font-size: 1rem; font-weight: bold; letter-spacing: 0.04em; }
-.card-top-desc { font-size: 0.76rem; color: var(--dim); margin-top: 0.2rem; line-height: 1.4; }
+.card-top-text { min-width: 0; }
+.card-top-name { font-size: 1.1rem; font-weight: bold; letter-spacing: 0.04em; line-height: 1.45; }
+.card-top-desc { margin-top: 0.4rem; }
 .card-top-cta {
   display: inline-flex; align-items: center; gap: 0.3rem; margin-top: 0.5rem;
   background: var(--planet-color); color: #0A1628;
   font-family: 'Fredoka One', cursive; font-size: 0.78rem;
-  padding: 0.28rem 0.85rem; border-radius: var(--radius-pill);
+  padding: 0.6rem 1rem; min-height: 44px; border-radius: var(--radius-pill);
   letter-spacing: 0.04em; transition: transform 0.2s;
 }
 .card-with-ranking:hover .card-top-cta { transform: scale(1.05); }
 
 /* 算数アタック問題（学年グリッド） */
 .card-wide {
-  grid-column: 1 / -1;
+  grid-column: 1 / -1; min-height: auto; cursor: default;
 }
 .grade-grid {
   display: flex; flex-wrap: wrap; gap: 0.55rem; margin-top: 0.6rem;
@@ -238,6 +272,8 @@ a { color: inherit; text-decoration: none; }
 .sec-kanji   { --planet-color: var(--kanji); }
 .sec-math    { --planet-color: var(--math); }
 .sec-social  { --planet-color: var(--social); }
+.sec-english { --planet-color: var(--english); }
+.sec-moral   { --planet-color: var(--moral); }
 .sec-music   { --planet-color: var(--music); }
 .sec-prog    { --planet-color: var(--prog); }
 .sec-type    { --planet-color: var(--type); }
@@ -261,16 +297,18 @@ footer {
 footer span { color: rgba(232,244,255,0.5); }
 
 @media (max-width: 600px) {
-  .cards { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-  .card  { padding: 1.1rem 1rem; }
-  .card-name { font-size: 0.95rem; }
-  .card-desc { display: none; }
+  .cards, .sec-social .cards { grid-template-columns: 1fr; gap: 0.9rem; }
+  .card, .card-with-ranking { padding: 1.2rem; min-height: auto; }
+  .card-cta { margin-top: 0.4rem; }
+  .planet-section { padding-bottom: 3rem; }
   .hero-planet { width: 80px; height: 80px; }
 }
-@media (max-width: 380px) { .cards { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) {
-  .hero-planet, .star { animation: none; }
-  .planet-section { opacity: 1; transform: none; transition: none; }
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .star { opacity: var(--o); }
+  .shooting-star { display: none; }
+  .card:hover, .card-with-ranking:hover { transform: none; }
 }
 
 /* NEWコーナー */
@@ -333,11 +371,11 @@ footer span { color: rgba(232,244,255,0.5); }
 </head>
 <body>
 
-<div id="starfield"></div>
+<div id="starfield" aria-hidden="true"></div>
 
 <!-- ヒーロー -->
 <section id="hero">
-  <svg class="hero-planet" viewBox="0 0 110 110" xmlns="http://www.w3.org/2000/svg">
+  <svg class="hero-planet" viewBox="0 0 110 110" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <defs>
       <radialGradient id="pg" cx="38%" cy="35%">
         <stop offset="0%"   stop-color="#4FC3F7"/>
@@ -362,12 +400,14 @@ footer span { color: rgba(232,244,255,0.5); }
   </svg>
   <h1 class="hero-title">まなびのとびら</h1>
   <p class="hero-sub">べんきょうを　もっと　たのしく！</p>
-  <nav class="nav-pills">
+  <nav class="nav-pills" aria-label="教科をえらぶ">
     <a class="nav-pill" href="#science">🔬 理科</a>
     <a class="nav-pill" href="#kokugo">📖 国語</a>
     <a class="nav-pill" href="#kanji">📚 漢字</a>
     <a class="nav-pill" href="#math">⭐ 算数</a>
     <a class="nav-pill" href="#social">🗾 社会</a>
+    <a class="nav-pill" href="#english">🛰️ 英語</a>
+    <a class="nav-pill" href="#moral">🌱 道徳</a>
     <a class="nav-pill" href="#music">🎵 音楽</a>
     <a class="nav-pill" href="#prog">💻 プログラミング</a>
     <a class="nav-pill" href="#typing">⌨️ タイピング</a>
@@ -376,14 +416,15 @@ footer span { color: rgba(232,244,255,0.5); }
   </nav>
 </section>
 
+<main>
 <!-- NEW コーナー -->
 <div class="new-banner-wrap" style="display:flex; flex-direction:column; gap:0.8rem;">
-  <a class="new-banner" href="https://kou-no1.github.io/kanken4/#/home" target="_blank" rel="noopener">
-    <span class="new-badge">✨ NEW</span>
+  <a class="new-banner" href="https://manabitane.jp/kanken/#/home" target="_blank" rel="noopener">
+    <span class="new-badge">✨ UPDATE</span>
     <span class="new-emoji">🖋️</span>
     <div class="new-text">
-      <div class="new-title">漢検４級合格への道 が新登場！</div>
-      <div class="new-desc">小学校６年生までの漢字はこれでばっちり！検定日を設定すると、カウントダウンして合格までサポート！</div>
+      <div class="new-title">漢検まなび帖 — 10級から4級まで対応！</div>
+      <div class="new-desc">小学1年生から中学生レベルまで、自分に合った級で漢字にチャレンジしよう！</div>
     </div>
     <span class="new-arrow">›</span>
   </a>
@@ -406,7 +447,7 @@ footer span { color: rgba(232,244,255,0.5); }
     <div class="section-orb">🔬</div>
     <div class="section-title-wrap">
       <div class="section-eyebrow">SCIENCE</div>
-      <div class="section-title">理科</div>
+      <h2 class="section-title">理科</h2>
     </div>
   </div>
   <div class="cards">
@@ -418,12 +459,22 @@ footer span { color: rgba(232,244,255,0.5); }
       <span class="card-cta">▶ 開く</span>
     </a>
 
-    <a class="card" href="https://kou-no1.github.io/science-RPG/" target="_blank" rel="noopener">
+    <article class="card card-detailed">
       <span class="card-emoji">⚗️</span>
-      <div class="card-name">サイエンス・クエスト</div>
-      <div class="card-desc">サイエンスワールドを冒険しながら、科学の世界を楽しもう！</div>
-      <span class="card-cta">▶ 開く</span>
-    </a>
+      <h3 class="card-name">リカ・クエスト</h3>
+      <p class="card-desc">3〜6年生の理科を学びながら、モンスターに挑戦！仲間や装備を集めて、なぞの「ムー大陸」へ。</p>
+      <details class="card-details">
+        <summary><span class="detail-open">くわしく見る</span><span class="detail-close">とじる</span></summary>
+        <div class="card-story">
+          <p class="card-lead"><strong>理科のぼうけんへ、出発！</strong></p>
+          <p>「どうして？」「もしも、こうしたら？」<br>そんなふしぎを、リカ・クエストでたしかめよう！</p>
+          <p>3〜6年生の理科を学びながら、モンスターに挑戦。問題をとくと、経験値や装備が手に入り、仲間もふえていくよ。まちがえても大丈夫。解説を読んで、何度でもチャレンジしよう。</p>
+          <p>すべての学年の洞窟をクリアすると、なぞの「ムー大陸」へ！ 実験の記録から手がかりを見つけ、予想したり、たしかめ方を考えたりする研究が待っているよ。中学校の理科にもつながる、新しいふしぎを探しにいこう。</p>
+          <p><strong>大切なのは、正解することだけじゃない。「なぜそう思ったのか」を考えること。きみの発見が、ぼうけんの力になる！</strong></p>
+        </div>
+      </details>
+      <a class="card-cta" href="https://kou-no1.github.io/science-RPG/" target="_blank" rel="noopener" aria-label="リカ・クエストを開く">▶ 開く</a>
+    </article>
 
     <a class="card" href="https://kou-no1.github.io/science_kahoot/" target="_blank" rel="noopener">
       <span class="card-emoji">🎮</span>
@@ -443,7 +494,7 @@ footer span { color: rgba(232,244,255,0.5); }
     <div class="section-orb">📖</div>
     <div class="section-title-wrap">
       <div class="section-eyebrow">JAPANESE</div>
-      <div class="section-title">国語</div>
+      <h2 class="section-title">国語</h2>
     </div>
   </div>
   <div class="cards">
@@ -466,15 +517,15 @@ footer span { color: rgba(232,244,255,0.5); }
     <div class="section-orb">📚</div>
     <div class="section-title-wrap">
       <div class="section-eyebrow">KANJI</div>
-      <div class="section-title">漢字</div>
+      <h2 class="section-title">漢字</h2>
     </div>
   </div>
   <div class="cards">
 
-    <a class="card" href="https://kou-no1.github.io/kanken4/#/home" target="_blank" rel="noopener">
+    <a class="card" href="https://manabitane.jp/kanken/#/home" target="_blank" rel="noopener">
       <span class="card-emoji">🖋️</span>
-      <div class="card-name">漢検４級合格への道</div>
-      <div class="card-desc">小学校６年生までの漢字はこれでばっちり！検定日を設定すると、カウントダウンして合格までサポート！</div>
+      <h3 class="card-name">漢検まなび帖</h3>
+      <p class="card-desc">漢検10級から4級まで対応！小学1年生から中学生レベルまで、自分に合った級で練習できるよ。検定日を設定して、合格をめざそう！</p>
       <span class="card-cta">▶ 開く</span>
     </a>
 
@@ -489,7 +540,7 @@ footer span { color: rgba(232,244,255,0.5); }
     <div class="section-orb">⭐</div>
     <div class="section-title-wrap">
       <div class="section-eyebrow">MATH</div>
-      <div class="section-title">算数</div>
+      <h2 class="section-title">算数</h2>
     </div>
   </div>
   <div class="cards">
@@ -501,6 +552,21 @@ footer span { color: rgba(232,244,255,0.5); }
       <span class="card-notice">🏆 全制覇で「？？？？？？？？」の称号を手に入れられるか！？</span>
       <span class="card-cta">▶ 開く</span>
     </a>
+
+    <article class="card card-detailed">
+      <span class="card-emoji">🧊</span>
+      <h3 class="card-name">カタチのほし</h3>
+      <p class="card-desc">さわって、まわして、つくってみよう！かたちや積み木で遊びながら、「わかった！」の星を集めよう。</p>
+      <details class="card-details">
+        <summary><span class="detail-open">くわしく見る</span><span class="detail-close">とじる</span></summary>
+        <div class="card-story">
+          <p class="card-lead"><strong>さわって、まわして、つくってみよう！「カタチのほし」</strong></p>
+          <p>かたちを合わせたり、積み木をつんだり、はこをひらいたり。ゲームのように遊びながら、図形のふしぎを見つけよう！</p>
+          <p>やさしい問題から、ちょっとむずかしい問題まで、好きなところから始められるよ。こまったときはヒントを見てもだいじょうぶ。何度でもためして、「わかった！」の星を集めよう。</p>
+        </div>
+      </details>
+      <a class="card-cta" href="https://github.com/Kou-no1/katachi-planet/" target="_blank" rel="noopener" aria-label="カタチのほしをGitHubで見る">▶ GitHubで見る</a>
+    </article>
 
     <div class="card card-wide">
       <span class="card-emoji">🔢</span>
@@ -527,7 +593,7 @@ footer span { color: rgba(232,244,255,0.5); }
     <div class="section-orb">🗾</div>
     <div class="section-title-wrap">
       <div class="section-eyebrow">SOCIAL STUDIES</div>
-      <div class="section-title">社会</div>
+      <h2 class="section-title">社会</h2>
     </div>
   </div>
   <div class="cards">
@@ -537,11 +603,18 @@ footer span { color: rgba(232,244,255,0.5); }
       <div class="card-top">
         <span class="card-emoji">🗺️</span>
         <div class="card-top-text">
-          <div class="card-top-name">都道府県パズル</div>
-          <div class="card-top-desc">都道府県の位置をパズルで覚えよう！君は県庁所在地も制覇できるか？！</div>
+          <h3 class="card-top-name">都道府県パズル</h3>
+          <p class="card-top-desc">遊んで、書いて、都道府県をおぼえよう！パズルやクイズ、なぞり書きで、日本の47都道府県にチャレンジ。</p>
           <a class="card-top-cta" href="https://kou-no1.github.io/todofuken/" target="_blank" rel="noopener">▶ 開く</a>
         </div>
       </div>
+      <details class="card-details">
+        <summary><span class="detail-open">くわしく見る</span><span class="detail-close">とじる</span></summary>
+        <div class="card-story">
+          <p class="card-lead"><strong>遊んで、書いて、都道府県をおぼえよう！</strong></p>
+          <p>日本の47都道府県を、パズルやクイズで楽しくおぼえよう！ ピースを地図にはめたり、県名や市名をなぞって書いたりして練習できるよ。まずは好きな地方から始めてみよう。なれてきたら、タイムアタックでじぶんのベストにちょうせん！</p>
+        </div>
+      </details>
       <div class="ranking-block">
         <div class="ranking-label">🏆 中央小ランキング</div>
         <div class="badge-row">
@@ -550,6 +623,21 @@ footer span { color: rgba(232,244,255,0.5); }
         </div>
       </div>
     </div>
+
+    <article class="card card-detailed">
+      <span class="card-emoji">⛩️</span>
+      <h3 class="card-name">時空社会御朱印帳</h3>
+      <p class="card-desc">地図を広げて、社会の冒険に出かけよう！小学3〜6年の世界をめぐり、仲間や名産品、御朱印を集めよう。中学発展コースもあるよ。</p>
+      <details class="card-details">
+        <summary><span class="detail-open">くわしく見る</span><span class="detail-close">とじる</span></summary>
+        <div class="card-story">
+          <p class="card-lead"><strong>地図を広げて、社会の冒険に出かけよう！</strong></p>
+          <p>小学3〜6年のまち・産業・政治・歴史・世界をめぐり、クイズに挑戦しながら、仲間や名産品、御朱印を集めよう。まちがえても、解説を読んでもう一度チャレンジできるよ。</p>
+          <p>もっと深く学びたいきみには、中学発展コースも。資料を比べたり、自分の考えを書いたりして、社会を見る目を育てよう！</p>
+        </div>
+      </details>
+      <a class="card-cta" href="https://kou-no1.github.io/shakai-journey/shakai-quest/" target="_blank" rel="noopener" aria-label="時空社会御朱印帳を開く">▶ 開く</a>
+    </article>
 
     <a class="card" href="https://kou-no1.github.io/chizukigo/" target="_blank" rel="noopener">
       <span class="card-emoji">🗾</span>
@@ -565,13 +653,61 @@ footer span { color: rgba(232,244,255,0.5); }
       <span class="card-cta">▶ 開く</span>
     </a>
 
-    <a class="card" href="https://kou-no1.github.io/shakai-journey/shakai-quest/" target="_blank" rel="noopener">
-      <span class="card-emoji">⛩️</span>
-      <div class="card-name">時空社会御朱印帳</div>
-      <div class="card-desc">日本各地や時空を旅しながら"御朱印"を集めよう！</div>
-      <span class="card-cta">▶ 開く</span>
-    </a>
 
+  </div>
+</section>
+
+
+<!-- 🛰️ 英語 -->
+<div class="orbit-divider"></div>
+<section class="planet-section sec-english" id="english">
+  <div class="section-header">
+    <div class="section-orb">🛰️</div>
+    <div class="section-title-wrap">
+      <div class="section-eyebrow">ENGLISH</div>
+      <h2 class="section-title">英語</h2>
+    </div>
+  </div>
+  <div class="cards">
+    <article class="card card-detailed">
+      <span class="card-emoji">📡</span>
+      <h3 class="card-name">星間通信局</h3>
+      <p class="card-desc">きみも「通信士」になって、英語で宇宙のなかまとつながろう！好きなところからチャレンジして、自分だけの星図を育てよう。</p>
+      <details class="card-details">
+        <summary><span class="detail-open">くわしく見る</span><span class="detail-close">とじる</span></summary>
+        <div class="card-story">
+          <p>きみも「通信士」になって、英語で宇宙のなかまとつながろう！ 音を聞いたり、単語をおぼえたり、友だちと話したり、表現カードを集めたり。好きなところからチャレンジして、自分だけの星図を育てよう！</p>
+        </div>
+      </details>
+      <a class="card-cta" href="https://manabitane.jp/english-station/" target="_blank" rel="noopener" aria-label="星間通信局を開く">▶ 開く</a>
+    </article>
+  </div>
+</section>
+
+
+<!-- 🌱 道徳 -->
+<div class="orbit-divider"></div>
+<section class="planet-section sec-moral" id="moral">
+  <div class="section-header">
+    <div class="section-orb">🌱</div>
+    <div class="section-title-wrap">
+      <div class="section-eyebrow">MORAL EDUCATION</div>
+      <h2 class="section-title">道徳</h2>
+    </div>
+  </div>
+  <div class="cards">
+    <article class="card card-detailed">
+      <span class="card-emoji">📜</span>
+      <h3 class="card-name">歴史人物エピソード</h3>
+      <p class="card-desc">日本や世界の偉人たちの挑戦や工夫を読んでみよう。ふりがなと音声で、あなたの「やってみたい！」につながるヒントを探そう。</p>
+      <details class="card-details">
+        <summary><span class="detail-open">くわしく見る</span><span class="detail-close">とじる</span></summary>
+        <div class="card-story">
+          <p>日本や世界の偉人たちは、どんなことに挑戦し、どんな工夫をしてきたのかな？ 気になる人物やキーワードから、エピソードを読んでみよう。文章にはふりがながついていて、音声でも聞けます。あなたの「やってみたい！」につながるヒントを見つけてね。</p>
+        </div>
+      </details>
+      <a class="card-cta" href="https://manabitane.jp/ijin-episode/" target="_blank" rel="noopener" aria-label="歴史人物エピソードを開く">▶ 開く</a>
+    </article>
   </div>
 </section>
 
@@ -583,7 +719,7 @@ footer span { color: rgba(232,244,255,0.5); }
     <div class="section-orb">🎵</div>
     <div class="section-title-wrap">
       <div class="section-eyebrow">MUSIC</div>
-      <div class="section-title">音楽</div>
+      <h2 class="section-title">音楽</h2>
     </div>
   </div>
   <div class="cards">
@@ -606,7 +742,7 @@ footer span { color: rgba(232,244,255,0.5); }
     <div class="section-orb">💻</div>
     <div class="section-title-wrap">
       <div class="section-eyebrow">PROGRAMMING</div>
-      <div class="section-title">プログラミング</div>
+      <h2 class="section-title">プログラミング</h2>
     </div>
   </div>
   <div class="cards">
@@ -643,18 +779,26 @@ footer span { color: rgba(232,244,255,0.5); }
     <div class="section-orb">⌨️</div>
     <div class="section-title-wrap">
       <div class="section-eyebrow">TYPING</div>
-      <div class="section-title">タイピング</div>
+      <h2 class="section-title">タイピング</h2>
     </div>
   </div>
   <div class="cards">
 
     <!-- 忍打道 -->
-    <a class="card" href="https://kou-no1.github.io/ninda-do/" target="_blank" rel="noopener">
+    <article class="card card-detailed">
       <span class="card-emoji">🥷</span>
-      <div class="card-name">忍打道 -NINDA DO-</div>
-      <div class="card-desc">確実に正しい指の型で打てる忍になれる道が、ただ一つ、ここにある。目指せタイピングの『影』…。</div>
-      <span class="card-cta">▶ 開く</span>
-    </a>
+      <h3 class="card-name">忍打道 —NINDA DO—</h3>
+      <p class="card-desc">キーの里で、タイピングの修行をはじめよう！正しいゆびの置き方から、術や巻物を集めて里一番の忍者をめざそう。</p>
+      <details class="card-details">
+        <summary><span class="detail-open">くわしく見る</span><span class="detail-close">とじる</span></summary>
+        <div class="card-story">
+          <p class="card-lead"><strong>キーの里で、タイピングの修行をはじめよう！</strong></p>
+          <p>まずは、ゆびの置き方と正しい打ち方から。あせらず、正しく打つことが、強い忍者への第一歩だよ。</p>
+          <p>修行を重ねて術や巻物を集めたら、速さにいどむ「疾風番付」や、名文を打つ「書庫」も待っている。はじめての人も、自分のペースで里一番の忍者をめざそう！</p>
+        </div>
+      </details>
+      <a class="card-cta" href="https://kou-no1.github.io/ninda-do/" target="_blank" rel="noopener" aria-label="忍打道を開く">▶ 開く</a>
+    </article>
 
     <!-- プレイグラム -->
     <div class="card-with-ranking">
@@ -710,7 +854,7 @@ footer span { color: rgba(232,244,255,0.5); }
     <div class="section-orb">🫀</div>
     <div class="section-title-wrap">
       <div class="section-eyebrow">HUMAN BODY</div>
-      <div class="section-title">人体</div>
+      <h2 class="section-title">人体</h2>
     </div>
   </div>
   <div class="cards">
@@ -733,7 +877,7 @@ footer span { color: rgba(232,244,255,0.5); }
     <div class="section-orb">📰</div>
     <div class="section-title-wrap">
       <div class="section-eyebrow">NEWS</div>
-      <div class="section-title">新聞を読もう</div>
+      <h2 class="section-title">新聞を読もう</h2>
     </div>
   </div>
   <div class="cards">
@@ -749,6 +893,7 @@ footer span { color: rgba(232,244,255,0.5); }
 </section>
 
 
+</main>
 <!-- フッター -->
 <footer>
   <p>🌟 まなびのとびら</p>
@@ -789,14 +934,10 @@ function shootStar(){
   document.body.appendChild(el);
   setTimeout(()=>el.remove(), 1400);
 }
-setInterval(shootStar, 4000);
-setTimeout(shootStar, 1200);
-
-/* スクロール出現 */
-const observer = new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.1 });
-document.querySelectorAll('.planet-section').forEach(s=>observer.observe(s));
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  setInterval(shootStar, 4000);
+  setTimeout(shootStar, 1200);
+}
 </script>
 </body>
 </html>
