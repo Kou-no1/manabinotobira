@@ -19,6 +19,7 @@
   --type:     #C77DFF;
   --body:     #FF9F43;
   --news:     #4FC3F7;
+  --zuko:     #FFB86B;
   --radius-card: 20px;
   --radius-pill: 999px;
 }
@@ -239,6 +240,7 @@ a { color: inherit; text-decoration: none; }
 .sec-type    { --planet-color: var(--type); }
 .sec-body    { --planet-color: var(--body); }
 .sec-news    { --planet-color: var(--news); }
+.sec-zuko    { --planet-color: var(--zuko); }
 
 .orbit-divider {
   position: relative; z-index: 1;
@@ -325,6 +327,22 @@ footer span { color: rgba(232,244,255,0.5); }
   .new-banner { flex-wrap: wrap; gap: 0.6rem; padding: 1rem 1.1rem; }
   .new-desc { font-size: 0.74rem; }
 }
+/* 詳しく */
+.new-banner { flex-direction: column; align-items: stretch; gap: 0.6rem; }
+.new-main { display: flex; align-items: center; gap: 1.1rem; color: inherit; text-decoration: none; }
+.more summary { list-style: none; cursor: pointer; font-size: 0.85rem; color: var(--planet-color, #FF6B6B); user-select: none; padding: 0.2rem 0; }
+.more summary::-webkit-details-marker { display: none; }
+.more summary .t-close { display: none; }
+.more[open] summary .t-open { display: none; }
+.more[open] summary .t-close { display: inline; }
+.more-body { margin-top: 0.5rem; padding-top: 0.6rem; border-top: 1px dashed rgba(255,255,255,0.2); font-size: 0.85rem; line-height: 1.9; color: var(--white); }
+.more-body b { color: var(--zuko); }
+.card-expandable { display: block; cursor: default; }
+.card-expandable .card-link { display: block; color: inherit; text-decoration: none; }
+@media (max-width: 480px) { .new-main { flex-wrap: wrap; gap: 0.6rem; } }
+.ph { display: inline-block; }
+.new-desc, .card-desc, .more-body { word-break: auto-phrase; line-break: strict; text-wrap: pretty; }
+.more-body { line-height: 2; }
 </style>
 </head>
 <body>
@@ -363,6 +381,7 @@ footer span { color: rgba(232,244,255,0.5); }
     <a class="nav-pill" href="#kokugo">📖 国語</a>
     <a class="nav-pill" href="#math">⭐ 算数</a>
     <a class="nav-pill" href="#social">🗾 社会</a>
+    <a class="nav-pill" href="#zuko">🎨 図工</a>
     <a class="nav-pill" href="#prog">💻 プログラミング</a>
     <a class="nav-pill" href="#typing">⌨️ タイピング</a>
     <a class="nav-pill" href="#body">🫀 人体</a>
@@ -371,25 +390,22 @@ footer span { color: rgba(232,244,255,0.5); }
 </section>
 
 <!-- NEW コーナー -->
-<div class="new-banner-wrap" style="display:flex; flex-direction:column; gap:0.8rem;">
-  <a class="new-banner" href="https://manabitane.jp/shakai-journey/shakai-quest/" target="_blank" rel="noopener">
-    <span class="new-badge">✨ NEW</span>
-    <span class="new-emoji">⛩️</span>
-    <div class="new-text">
-      <div class="new-title">時空社会御朱印帳 が新登場！</div>
-      <div class="new-desc">日本各地や時空を旅しながら"御朱印"を集めよう！</div>
-    </div>
-    <span class="new-arrow">›</span>
-  </a>
-  <a class="new-banner" href="https://manabitane.jp/ninda-do/" target="_blank" rel="noopener">
-    <span class="new-badge">✨ NEW</span>
-    <span class="new-emoji">🥷</span>
-    <div class="new-text">
-      <div class="new-title">忍打道 -NINDA DO- が新登場！</div>
-      <div class="new-desc">確実に正しい指の型で打てる忍になれる道が、ただ一つ、ここにある。目指せタイピングの『影』…。</div>
-    </div>
-    <span class="new-arrow">›</span>
-  </a>
+<div class="new-banner-wrap">
+  <div class="new-banner">
+    <a class="new-main" href="https://manabitane.jp/enotane/" target="_blank" rel="noopener">
+      <span class="new-badge">✨ NEW</span>
+      <span class="new-emoji">🎨</span>
+      <div class="new-text">
+        <div class="new-title">えのたね が新登場！</div>
+        <div class="new-desc"><span class="ph">自分の表し方が、</span><span class="ph">一つ、</span><span class="ph">ふえる。</span><span class="ph">つかうもので</span><span class="ph">線も、</span><span class="ph">色も、</span><span class="ph">いろいろためして、</span><span class="ph">自分の世界が</span><span class="ph">広がる。</span></div>
+      </div>
+      <span class="new-arrow">›</span>
+    </a>
+    <details class="more">
+      <summary><span class="t-open">▽ 詳しく</span><span class="t-close">△ 閉じる</span></summary>
+      <p class="more-body">「えのたね」は、えんぴつやクレヨン、えのぐのつかいかたを、アニメでまなべるアプリだよ。<br>ホームで、つかいたいどうぐや、やってみたいことをえらぼう。<b>「みてみよう」</b>で、どうぐのうごきや、いろのかわりかたをみよう。<br>アニメは、とめたり、ゆっくりにしたりできるよ。<br>もういちどみたいところは、くりかえしてみよう。<b>「ためしてみよう」</b>で、よういするものと、きをつけることをたしかめよう。<br>かみとどうぐをよういして、やってみよう。<b>「気づいたかな」</b>で、いろやせんのちがいをみつけよう。<br>どんなことに気づいたかな？<b>「つかってみよう」</b>のヒントをつかって、じぶんのえをかいてみよう。<br>いろやかたちをかえてもいいよ。<br>やってみたら、すきなスタンプをつけよう。<br>あとからかえたり、はずしたりもできるよ。<b>「ラボ」</b>では、いろまぜや、水のりょう、かたちのおきかたをためせるよ。<br>気になることを、いろいろためしてみよう！</p>
+    </details>
+  </div>
 </div>
 
 
@@ -473,20 +489,6 @@ footer span { color: rgba(232,244,255,0.5); }
       <span class="card-cta">▶ 開く</span>
     </a>
 
-    <div class="card card-wide">
-      <span class="card-emoji">🔢</span>
-      <div class="card-name">算数アタック問題</div>
-      <div class="card-desc">学年ごとにチャレンジ！自分の学年をタップしよう</div>
-      <div class="grade-grid">
-        <a class="grade-btn" href="https://manabitane.jp/math-portal-01/" target="_blank" rel="noopener"><span class="grade-num">1</span>1年生</a>
-        <a class="grade-btn" href="https://manabitane.jp/math-portal-02/" target="_blank" rel="noopener"><span class="grade-num">2</span>2年生</a>
-        <a class="grade-btn" href="https://manabitane.jp/math-portal-03/" target="_blank" rel="noopener"><span class="grade-num">3</span>3年生</a>
-        <a class="grade-btn" href="https://manabitane.jp/math-portal-04/" target="_blank" rel="noopener"><span class="grade-num">4</span>4年生</a>
-        <a class="grade-btn" href="https://manabitane.jp/math-portal-05/" target="_blank" rel="noopener"><span class="grade-num">5</span>5年生</a>
-        <a class="grade-btn" href="https://manabitane.jp/math-portal-06/" target="_blank" rel="noopener"><span class="grade-num">6</span>6年生</a>
-      </div>
-    </div>
-
   </div>
 </section>
 
@@ -542,6 +544,35 @@ footer span { color: rgba(232,244,255,0.5); }
       <div class="card-desc">日本各地や時空を旅しながら"御朱印"を集めよう！</div>
       <span class="card-cta">▶ 開く</span>
     </a>
+
+  </div>
+</section>
+
+
+<!-- 🎨 図工 -->
+<div class="orbit-divider"></div>
+<section class="planet-section sec-zuko" id="zuko">
+  <div class="section-header">
+    <div class="section-orb">🎨</div>
+    <div class="section-title-wrap">
+      <div class="section-eyebrow">ART &amp; CRAFTS</div>
+      <div class="section-title">図工</div>
+    </div>
+  </div>
+  <div class="cards">
+
+    <div class="card card-expandable">
+      <a class="card-link" href="https://manabitane.jp/enotane/" target="_blank" rel="noopener">
+        <span class="card-emoji">🖍️</span>
+        <div class="card-name">えのたね</div>
+        <div class="card-desc" style="display:block;"><span class="ph">自分の表し方が、</span><span class="ph">一つ、</span><span class="ph">ふえる。</span><span class="ph">つかうもので</span><span class="ph">線も、</span><span class="ph">色も、</span><span class="ph">いろいろためして、</span><span class="ph">自分の世界が</span><span class="ph">広がる。</span></div>
+        <span class="card-cta">▶ 開く</span>
+      </a>
+      <details class="more">
+        <summary><span class="t-open">▽ 詳しく</span><span class="t-close">△ 閉じる</span></summary>
+        <p class="more-body">「えのたね」は、えんぴつやクレヨン、えのぐのつかいかたを、アニメでまなべるアプリだよ。<br>ホームで、つかいたいどうぐや、やってみたいことをえらぼう。<b>「みてみよう」</b>で、どうぐのうごきや、いろのかわりかたをみよう。<br>アニメは、とめたり、ゆっくりにしたりできるよ。<br>もういちどみたいところは、くりかえしてみよう。<b>「ためしてみよう」</b>で、よういするものと、きをつけることをたしかめよう。<br>かみとどうぐをよういして、やってみよう。<b>「気づいたかな」</b>で、いろやせんのちがいをみつけよう。<br>どんなことに気づいたかな？<b>「つかってみよう」</b>のヒントをつかって、じぶんのえをかいてみよう。<br>いろやかたちをかえてもいいよ。<br>やってみたら、すきなスタンプをつけよう。<br>あとからかえたり、はずしたりもできるよ。<b>「ラボ」</b>では、いろまぜや、水のりょう、かたちのおきかたをためせるよ。<br>気になることを、いろいろためしてみよう！</p>
+      </details>
+    </div>
 
   </div>
 </section>
@@ -700,7 +731,7 @@ footer span { color: rgba(232,244,255,0.5); }
 <!-- フッター -->
 <footer>
   <p>🌟 まなびのとびら</p>
-  <p style="margin-top:0.4rem">「あったらいいのに」を、作ってる。&nbsp;&nbsp;<span>© 2026 まなびたね</span></p>
+  <p style="margin-top:0.4rem">「あったらいいのに」を、作ってる。&nbsp;&nbsp;<span>© 2026 野村晃一</span></p>
 </footer>
 
 
